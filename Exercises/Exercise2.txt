@@ -1,0 +1,30 @@
+﻿EXERCISE 2 — Large File Log Analyzer
+File (log.txt)
+    2025-01-10|INFO|User logged in
+    2025-01-10|ERROR|Database timeout
+    2025-01-10|INFO|Order processed
+    2025-01-11|ERROR|Null reference exception
+    2025-01-11|INFO|Cache refreshed
+
+Task
+1. Using File.ReadLines() + LINQ:
+    => Read the file line by line (no ReadAllLines).
+2. Convert each line into an object:
+
+class LogEntry
+{
+    public DateTime Date { get; set; }
+    public string Level { get; set; }  // INFO/ ERROR/ WARNING
+    public string Message { get; set; }
+}
+
+
+Hint: Split using:
+var parts = line.Split('|');
+
+
+3. Filter only ERROR logs.
+4. Count how many ERRORs happened each day.
+5. Create a summary output:
+    Date: 2025-01-10 | Errors: 1
+    Date: 2025-01-11 | Errors: 1

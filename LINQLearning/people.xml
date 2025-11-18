@@ -1,0 +1,34 @@
+﻿<People>
+  <Person>
+    <Name>Ritu</Name>
+    <Age>25</Age>
+  </Person>
+  <Person>
+    <Name>Raushan</Name>
+    <Age>29</Age>
+  </Person>
+  <Person>
+    <Name>Rajeev</Name>
+    <Age>30</Age>
+  </Person>
+  <Person>
+    <Name>Shiv</Name>
+    <Age>26</Age>
+  </Person>
+  <Person>
+    <Name>Suchitra</Name>
+    <Age>24</Age>
+  </Person>
+  <Person>
+    <Name>Pratibha</Name>
+    <Age>26</Age>
+  </Person>
+  <Person>
+    <Name>Aman</Name>
+    <Age>17</Age>
+  </Person>
+  <Person>
+    <Name>Ashi</Name>
+    <Age>15</Age>
+  </Person>
+</People>

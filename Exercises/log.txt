@@ -1,0 +1,8 @@
+﻿2025-01-10|INFO|User logged in
+2025-01-10|ERROR|Database timeout
+2025-01-10|ERROR|Authentication error
+2025-01-10|INFO|Order processed
+2025-01-11|ERROR|Null reference exception
+2025-01-11|ERROR|Divide by zero exception
+2025-01-11|ERROR|Database connection lost
+2025-01-11|INFO|Cache refreshed

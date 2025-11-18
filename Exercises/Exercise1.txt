@@ -1,0 +1,26 @@
+﻿EXERCISE 1 — Employee Analytics
+class Employee
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Department { get; set; }
+    public double Salary { get; set; }
+}
+
+Sample Data:
+
+List<Employee> employees = new()
+{
+    new Employee { Id = 1, Name = "Ritu", Department = "HR", Salary = 45000 },
+    new Employee { Id = 2, Name = "Raushan", Department = "IT", Salary = 55000 },
+    new Employee { Id = 3, Name = "Pratibha", Department = "IT", Salary = 60000 },
+    new Employee { Id = 4, Name = "Shiv", Department = "Admin", Salary = 40000 }
+};
+
+Tasks
+
+    1. Get all employees whose salary is greater than 50,000.
+    2. Get only the names of all employees from the IT department.
+    3. Sort employees by salary descending.
+    4. Group employees by department and display count in each group.
+    5. Find the employee with highest salary.
