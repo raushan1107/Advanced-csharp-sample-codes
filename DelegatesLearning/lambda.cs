@@ -24,7 +24,7 @@ namespace DelegatesLearning
 
         public void ex2()
         {
-            Action greet = () => Console.WriteLine("Hello Lambda!");
+            var greet = () => Console.WriteLine("Hello Lambda!");
             greet();
         }
 

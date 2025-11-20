@@ -4,11 +4,13 @@
     {
         static void Main(string[] args)
         {
-            MathOperation op;
-            op = Add;
-            Console.WriteLine(op(5, 3)); // Called Add method
-            op = Multiply;
-            Console.WriteLine(op(5, 3)); // Called Multiply method
+            lambda l1 = new lambda();
+            l1.ex1();
+            //MathOperation op;
+            //op = Add;
+            //Console.WriteLine(op(5, 3)); // Called Add method
+            //op = Multiply;
+            //Console.WriteLine(op(5, 3)); // Called Multiply method
 
         }
         public delegate int MathOperation(int x, int y);
