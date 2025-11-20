@@ -1,0 +1,19 @@
+Exercise: Multithreaded Stock Price Monitor
+Topics: Multithreading, Tasks, Locks, Deadlock avoidance, Thread pools
+
+Problem Statement:
+Create a fake stock price monitor that updates and displays prices continuously.
+
+Requirements:
+
+A shared dictionary:
+Dictionary<string, double> Prices
+A background thread updates prices every 200ms.
+A Task displays the prices every 1 second.
+Protect access using lock mechanism.
+
+Make sure it is deadlock proof:
+Explain in comments why your lock ordering avoids deadlocks.
+
+Expected Output:
+TATA: 890.11   |   INFY: 1532.42   |   RELIANCE: 2550.00
