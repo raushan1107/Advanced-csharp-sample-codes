@@ -1,0 +1,19 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="WpfAppLearning.DispatcherDemoPage"
+      av:DesignHeight="380" av:DesignWidth="400">
+
+    <StackPanel Margin="20">
+        <TextBlock Text="Dispatcher Demo"
+                   FontSize="22" FontWeight="Bold"/>
+
+        <TextBlock x:Name="StatusText"
+                   Margin="0 20"
+                   FontSize="18" />
+
+        <Button Content="Start Heavy Work (Async)" 
+                Height="40" Width="250"
+                Click="StartWork_Click"/>
+    </StackPanel>
+
+</Page>

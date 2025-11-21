@@ -1,0 +1,123 @@
+﻿<Window x:Class="WpfAppLearning.VSLayoutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Visual Studio Layout" Height="700" Width="1200">
+
+    <Grid>
+
+        <!-- =====================================================
+             DEFINE FULL STRUCTURE
+             Rows:
+              0 → Menu bar
+              1 → Toolbar
+              2 → Main workspace
+              3 → Bottom Output panel
+              4 → Status Bar (footer)
+        ====================================================== -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Menu -->
+            <RowDefinition Height="Auto"/>
+            <!-- Toolbar -->
+            <RowDefinition Height="*"/>
+            <!-- Main Layout -->
+            <RowDefinition Height="200"/>
+            <!-- Bottom Output -->
+            <RowDefinition Height="Auto"/>
+            <!-- Status Bar -->
+        </Grid.RowDefinitions>
+
+
+        <!-- =====================================================
+              1. MENU BAR  (like Visual Studio)
+        ====================================================== -->
+        <Menu Grid.Row="0">
+            <MenuItem Header="_File">
+                <MenuItem Header="New"/>
+                <MenuItem Header="Open"/>
+                <MenuItem Header="Exit"/>
+            </MenuItem>
+
+            <MenuItem Header="_Edit">
+                <MenuItem Header="Undo"/>
+                <MenuItem Header="Redo"/>
+            </MenuItem>
+
+            <MenuItem Header="_View">
+                <MenuItem Header="Solution Explorer"/>
+                <MenuItem Header="Toolbox"/>
+            </MenuItem>
+
+            <MenuItem Header="_Tools"/>
+            <MenuItem Header="_Help"/>
+        </Menu>
+
+
+        <!-- =====================================================
+              2. TOOLBAR ROW
+        ====================================================== -->
+        <ToolBar Grid.Row="1">
+            <Button Content="Build"/>
+            <Button Content="Run"/>
+            <Button Content="Debug"/>
+        </ToolBar>
+
+
+        <!-- =====================================================
+              3. MAIN LAYOUT (Left | Center | Right)
+              A Grid with 3 Columns
+        ====================================================== -->
+        <Grid Grid.Row="2">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <!-- Toolbox / Designer -->
+                <ColumnDefinition Width="*"/>
+                <!-- Editor / Designer -->
+                <ColumnDefinition Width="300"/>
+                <!-- Solution Explorer -->
+            </Grid.ColumnDefinitions>
+
+            <!-- LEFT PANEL (like Toolbox) -->
+            <Border Grid.Column="0" BorderThickness="1" BorderBrush="DarkGray" Padding="10">
+                <TextBlock Text="Toolbox / Designer Left Panel"
+                           FontWeight="Bold" />
+            </Border>
+
+            <!-- CENTER PANEL (like Editor/Designer) -->
+            <Border Grid.Column="1" BorderThickness="1" BorderBrush="DarkGray" Padding="10" Margin="5 0">
+                <TextBlock Text="Main Editor Area"
+                           FontWeight="Bold" />
+            </Border>
+
+            <!-- RIGHT PANEL (like Solution Explorer) -->
+            <Border Grid.Column="2" BorderThickness="1" BorderBrush="DarkGray" Padding="10">
+                <TextBlock Text="Solution Explorer Panel"
+                           FontWeight="Bold" />
+            </Border>
+
+        </Grid>
+
+
+        <!-- =====================================================
+              4. BOTTOM OUTPUT PANEL
+        ====================================================== -->
+        <Border Grid.Row="3" BorderThickness="1" BorderBrush="DarkGray" Padding="10" Margin="0 5 0 5">
+            <TextBlock Text="Output / Error List / Console Window"
+                       FontWeight="Bold" />
+        </Border>
+
+
+        <!-- =====================================================
+              5. STATUS BAR (FOOTER)
+        ====================================================== -->
+        <StatusBar Grid.Row="4">
+            <StatusBarItem Content="Ready"/>
+            <StatusBarItem Content="Line 1, Col 1"
+                           HorizontalAlignment="Right"/>
+        </StatusBar>
+        
+
+    </Grid>
+
+</Window>

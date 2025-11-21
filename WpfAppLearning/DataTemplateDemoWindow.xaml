@@ -1,0 +1,94 @@
+﻿<Window x:Class="WpfAppLearning.DataTemplateDemoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:WpfApp_DataBindingLearning.Models"
+        mc:Ignorable="d"
+        Title="DataTemplateDemoWindow" Height="450" Width="800">
+
+    <ScrollViewer>
+
+        <StackPanel Margin="20">
+
+            <!-- HEADER -->
+            <TextBlock Text="WPF Data Templates Demonstration"
+                       FontSize="26" FontWeight="Bold" Margin="0 0 0 20"/>
+
+
+            <!-- 1. ITEM TEMPLATE FOR LISTBOX -->
+            <GroupBox Header="1. ItemTemplate – How each item appears in a List"
+                      Margin="0 0 0 20">
+                <StackPanel Margin="10">
+
+                    <ListBox ItemsSource="{Binding People}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="DarkGray" BorderThickness="1"
+                                        CornerRadius="6" Padding="10" Margin="5">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16"/>
+                                        <TextBlock Text="{Binding Email}" Foreground="DarkBlue"/>
+                                        <TextBlock Text="{Binding Age}" Foreground="DarkGreen"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                </StackPanel>
+            </GroupBox>
+
+
+            <!-- 2. IMPLICIT DATATEMPLATE -->
+            <GroupBox Header="2. Implicit DataTemplate – Template applied automatically based on Type"
+                      Margin="0 0 0 20">
+                <StackPanel Margin="10">
+
+                    <StackPanel.Resources>
+                        <DataTemplate DataType="{x:Type models:Person}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="15"/>
+                                <TextBlock Text=" - " />
+                                <TextBlock Text="{Binding Email}" Foreground="DarkBlue"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </StackPanel.Resources>
+
+                    <ItemsControl ItemsSource="{Binding People}" Margin="5"/>
+
+                </StackPanel>
+            </GroupBox>
+
+
+            <!-- 3. HIERARCHICAL DATA TEMPLATE -->
+            <GroupBox Header="3. HierarchicalDataTemplate – For TreeView or nested data"
+                      Margin="0 0 0 20">
+                <StackPanel Margin="10">
+
+                    <TreeView ItemsSource="{Binding Departments}">
+                        <TreeView.Resources>
+
+                            <HierarchicalDataTemplate DataType="{x:Type models:Department}"
+                                                      ItemsSource="{Binding Employees}">
+                                <TextBlock Text="{Binding DeptName}" FontWeight="Bold"/>
+                            </HierarchicalDataTemplate>
+
+                            <DataTemplate DataType="{x:Type models:Employee}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                                    <TextBlock Text=" - " />
+                                    <TextBlock Text="{Binding Role}" Foreground="DarkGreen"/>
+                                </StackPanel>
+                            </DataTemplate>
+
+                        </TreeView.Resources>
+                    </TreeView>
+
+                </StackPanel>
+            </GroupBox>
+
+        </StackPanel>
+
+    </ScrollViewer>
+</Window>

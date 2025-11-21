@@ -1,0 +1,1459 @@
+﻿<Page x:Class="WpfAppLearning.NotesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="WPF Notes">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="20">
+
+        <StackPanel Orientation="Vertical" Width="800">
+            <!-- ==========================
+                     PAGE HEADER
+                 ========================== -->
+            <Border Background="#2D2D30"
+                    CornerRadius="6"
+                    Padding="15"
+                    Margin="0 0 0 20">
+                <StackPanel>
+                    <TextBlock Text="WPF Deep-Dive Concepts and Architecture Notes"
+                   Foreground="White"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   Margin="0 0 0 5"/>
+
+                    <TextBlock Text="A comprehensive breakdown of WPF architecture, rendering pipeline, dependency properties, MVVM, dispatcher, routed events, and Oracle SDO_Geometry concepts."
+                   Foreground="#CCCCCC"
+                   FontSize="14"
+                   TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ==========================
+                 SECTION 1: WPF Concepts
+            =========================== -->
+            <Expander Header="1. Understanding WPF – Deep Concepts" IsExpanded="False" Margin="0 10 0 10">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <TextBlock TextWrapping="Wrap" FontSize="14" xml:space="preserve">
+
+    What is WPF Actually?
+    WPF = Windows Presentation Foundation, released with .NET 3.0.
+    To understand WPF deeply, you must understand what problem it was built to solve, and how it is architected inside.
+
+    1. Why WPF Was Created (The Problem With WinForms)
+    WinForms is:
+    • immediate mode rendering
+    • wrapper around Win32 and GDI
+    • paints pixel-by-pixel each frame
+    • CPU-based rendering
+    • not vector-based
+    • no composition engine
+    • no styling system
+    • no advanced templating
+
+    This made complex UIs:
+    • slow
+    • non-scalable
+    • extremely hard to theme
+    • impossible to animate smoothly
+
+    Microsoft wanted a UI system like:
+    • HTML + CSS separation
+    • Vector graphics
+    • GPU acceleration
+    • Powerful styling
+    • Data binding
+    • Rich animations
+
+    Hence WPF was born.
+
+    ------------------------------------------------------------
+
+    2. WPF Architecture — The 5-Layer System
+    WPF is built on this rendering pipeline:
+
+    Your XAML / C# Code
+        ↓
+    WPF Framework Layer (Controls, Layout, Binding)
+        ↓
+    WPF Presentation Core (Drawing, Media, Animation)
+        ↓
+    Media Integration Layer (MILCore)
+        ↓
+    DirectX Engine (GPU Rendering)
+
+    Summary:
+    • Framework layer → controls, layout, binding
+    • PresentationCore → low-level drawing (brushes, visuals, geometry)
+    • MILCore → unmanaged rendering engine
+    • DirectX → final GPU rendering
+
+    This is the reason WPF is:
+    • GPU accelerated
+    • Vector-based
+    • Resolution independent
+    • Capable of animations at 60 FPS
+    • Suitable for dashboards and rich UI
+
+    ------------------------------------------------------------
+
+    WPF’s 5-LAYER ARCHITECTURE ANALOGY (Movie Production)
+    1. Script layer → your XAML/C#
+    2. Director layer → framework controls
+    3. Camera crew → drawing instructions
+    4. Special effects unit → composition engine
+    5. Projector → DirectX on GPU
+
+    ------------------------------------------------------------
+
+    1) Your Application Layer (XAML + C#)
+    Defines:
+    • What controls you want
+    • How they look
+    • How they behave
+
+    2) WPF Framework Layer
+    Contains:
+    • Button, ListView, TextBox, Grid
+    • Layout system
+    • Binding engine
+    • Styles
+    • Templates
+
+    3) PresentationCore Layer
+    Handles:
+    • Geometry
+    • Brushes
+    • Visuals
+    • Text formatting
+
+    4) Media Integration Layer (MILCore)
+    • Unmanaged C++ code
+    • Talks directly to DirectX
+    • Handles composition, animations, transforms
+
+    5) DirectX (GPU Rendering Engine)
+    Does:
+    • Rasterization
+    • Anti-aliasing
+    • Vector rendering
+    • Hardware acceleration
+
+    That is why WPF animations are smooth and scalable.
+
+    ------------------------------------------------------------
+
+    Why WPF uses DirectX
+    DirectX = GPU power
+    GPU excels at:
+    • drawing shapes
+    • animations
+    • transforms
+    • gradients
+    • vector graphics
+
+    WinForms uses GDI → CPU based → slow.
+    WPF uses DirectX → GPU accelerated → fast.
+
+    ------------------------------------------------------------
+
+    3. Retained Mode Rendering vs Immediate Mode
+    WinForms = immediate mode (draw every frame manually)
+    WPF = retained mode:
+    • keeps entire scene graph in memory
+    • GPU re-renders only changed parts
+
+    Benefits:
+    • less CPU usage
+    • high performance
+    • smooth animations
+    • resolution independent rendering
+
+    ------------------------------------------------------------
+
+    4. WPF is a Scene Graph System (Visual Tree)
+    Every UI element is part of a visual tree.
+    Tree controls:
+    • rendering
+    • layout
+    • hit testing
+    • animations
+    • resource lookup
+
+    ------------------------------------------------------------
+
+    5. WPF is Built on Dependency Properties
+    Normal .NET properties cannot:
+    • support animation
+    • support styling
+    • support binding
+    • support resource lookup
+    • inherit values
+    • participate in templates
+
+    Dependency Properties solve all of this.
+
+    DPs enable:
+    • Binding
+    • Animation
+    • Styling
+    • Templates
+    • Inheritance
+    • Attached properties
+    • Value precedence
+    • Performance optimization
+
+    ------------------------------------------------------------
+
+    6. WPF Uses DirectX, Not GDI
+    Everything is GPU rendered:
+    • composition
+    • vector drawing
+    • anti-aliasing
+    • animations
+    • transforms
+
+    ------------------------------------------------------------
+
+    Summary of Section 1
+    • WPF replaces WinForms limitations
+    • WPF uses a rich GPU-based rendering pipeline
+    • It uses retained mode rendering
+    • It is built on Dependency Properties + Visual Tree
+    • WPF is a scene graph system + DirectX rendering
+    • Supports animations, templates, transformations
+
+                    </TextBlock>
+                </ScrollViewer>
+            </Expander>
+
+
+
+
+            <!-- ==========================
+                 SECTION 2: XAML Engine & WPF Compilation Model
+            =========================== -->
+            <Expander Header="2. XAML Engine &amp; WPF Compilation Model" IsExpanded="False" Margin="0 10 0 10">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <TextBlock TextWrapping="Wrap" FontSize="14" xml:space="preserve">
+
+    XAML Engine (How It Really Works Internally)
+    This is the foundation for understanding:
+    • Binding
+    • Templates
+    • Resources
+    • Dependency Properties
+    • Design tools
+    • WPF’s dynamic UI
+
+    XAML is not just XML.
+    It is a markup language that maps directly to .NET objects.
+
+    You write:
+    &lt;Button Content="Click me" Width="100"/&gt;
+
+    WPF must convert this XML into:
+    Button btn = new Button();
+    btn.Content = "Click me";
+    btn.Width = 100;
+
+    ------------------------------------------------------------
+
+    1. During Build — XAML becomes BAML
+    When you compile:
+    MyWindow.xaml
+        → MyWindow.g.cs (auto-generated)
+        → MyWindow.baml (Binary XAML)
+
+    What is BAML?
+    • Binary Application Markup Language
+    • Highly compressed
+    • Much faster to load than raw XAML
+    • Stored inside assembly as a resource
+
+    ------------------------------------------------------------
+
+    2. At Runtime — BAML Loader Creates Your UI Tree
+    WPF performs the following steps:
+
+    ✔ XAML parser reads BAML  
+    ✔ Creates .NET objects (Button, Grid, Border…)  
+    ✔ Applies dependency property values  
+    ✔ Applies styles  
+    ✔ Applies templates  
+    ✔ Builds Logical Tree  
+    ✔ Builds Visual Tree  
+    ✔ Sends visuals to rendering pipeline  
+
+    This process completes before your Window appears.
+
+    ------------------------------------------------------------
+
+    3. XAML = Object Instantiation + Property Setting
+    Example:
+    &lt;Button&gt;
+        &lt;Button.Background&gt;
+            &lt;SolidColorBrush Color="Red"/&gt;
+        &lt;/Button.Background&gt;
+    &lt;/Button&gt;
+
+    Internally becomes:
+    Button btn = new Button();
+    btn.Background = new SolidColorBrush(Colors.Red);
+
+    Every XAML tag = a .NET class
+    Every attribute = a property setter
+
+    ------------------------------------------------------------
+
+    4. Markup Extensions (Critical Feature)
+    XAML supports “special syntax” through markup extensions:
+
+    Examples:
+    Text="{Binding Name}"
+    Background="{StaticResource MyBrush}"
+    ToolTip="{DynamicResource HighlightColor}"
+
+    What handles this?
+    • BindingExtension  
+    • StaticResourceExtension  
+    • DynamicResourceExtension  
+    • TemplateBindingExtension  
+
+    When XAML parser sees:
+    {Binding Name}
+    it creates:
+    new Binding("Name");
+
+    ------------------------------------------------------------
+
+    5. XAML Builds the Logical Tree First
+    Logical Tree = structure of your UI.
+
+    Window
+     └── Grid
+           ├── TextBlock
+           └── Button
+
+    Logical Tree controls:
+    • Resource lookup  
+    • DataContext inheritance  
+    • Event routing (bubbling/tunneling)  
+    • Styles  
+
+    Whenever you place controls inside Panels, Logical Tree is what WPF uses to find parents.
+
+    ------------------------------------------------------------
+
+    6. Then WPF Builds the Visual Tree
+    Visual Tree contains the REAL rendered elements.
+    A Button becomes:
+
+    Button
+     └── Border
+         └── ContentPresenter
+             └── TextBlock (“Click me”)  
+
+    The Visual Tree is detailed, containing:
+    • borders
+    • presenters
+    • decorators
+    • visuals
+    • shapes
+
+    Logical Tree = your layout  
+    Visual Tree = what actually gets drawn  
+
+    Visual Tree is crucial for:
+    • rendering
+    • hit testing
+    • triggers
+    • animations
+    • templates
+
+    ------------------------------------------------------------
+
+    7. Complete Internal Pipeline of XAML Loading
+
+    YourWindow.xaml  
+        ↓ Compile  
+    YourWindow.baml  
+        ↓ Runtime  
+    BamlReader  
+        ↓  
+    XamlParser  
+        ↓  
+    ObjectWriter (creates .NET objects)  
+        ↓  
+    Dependency properties applied  
+        ↓  
+    Logical Tree built  
+        ↓  
+    Control Templates applied  
+        ↓  
+    Visual Tree built  
+        ↓  
+    PresentationCore  
+        ↓  
+    MILCore  
+        ↓  
+    DirectX  
+        ↓  
+    Screen  
+
+    This is the *real* internal operation of WPF.
+
+    ------------------------------------------------------------
+
+    8. Why XAML Must Be Compiled Into BAML
+    Reasons:
+    • Faster to load  
+    • Pre-parsed  
+    • Tokenized  
+    • Smaller size  
+    • Better startup performance  
+    • Avoids runtime XML parsing  
+    • Helps WPF designer load faster  
+
+    ------------------------------------------------------------
+
+    9. XAML &amp; C# Compilation Together
+    WPF adds only ONE extra step:
+    XAML → BAML
+
+    Everything else is the same as any .NET program:
+    C# → IL → JIT → Machine code
+
+    So WPF is not “special” at runtime.
+    It simply has an additional build step to convert markup into binary.
+
+    ------------------------------------------------------------
+
+    Section Summary
+
+    ✔ XAML compiles into BAML  
+    ✔ BAML is loaded by the XAML engine  
+    ✔ .NET objects are created dynamically  
+    ✔ Dependency properties are applied  
+    ✔ Logical Tree and Visual Tree are constructed  
+    ✔ Templates and styles get applied  
+    ✔ Rendering goes through DirectX  
+
+    Once you understand this, WPF’s “magic” becomes predictable and logical.
+
+                    </TextBlock>
+                </ScrollViewer>
+            </Expander>
+
+
+
+            <!-- ==========================
+                 SECTION 3: Dependency Properties
+            =========================== -->
+            <Expander Header="3. Dependency Properties (Core of WPF)" IsExpanded="False" Margin="0 10 0 10">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <TextBlock TextWrapping="Wrap" FontSize="14" xml:space="preserve">
+
+    Dependency Properties (DPs)
+    Dependency Properties are the MOST important concept in WPF.  
+    If you master Dependency Properties, then:
+    • Binding  
+    • Styling  
+    • Animation  
+    • Templates  
+    • Resources  
+    • Attached properties  
+    • Inheritance  
+    • Commands (indirectly)  
+    all become intuitive.
+
+    DPs power nearly EVERYTHING in WPF.  
+    They exist because normal .NET properties are not enough for a UI framework.
+
+    ------------------------------------------------------------
+
+    1. Why Normal .NET Properties Are Not Enough
+    A regular C# property is:
+    • a private field  
+    • with getter and setter  
+    • holding a value  
+    • no metadata  
+    • no change notifications  
+    • no support for binding  
+    • no animations  
+    • no default values  
+    • no template integration  
+
+    WPF needed properties that support:
+    ✔ Binding  
+    ✔ Animation  
+    ✔ Styling  
+    ✔ Inheritance  
+    ✔ Value precedence  
+    ✔ Templates  
+    ✔ Resources  
+    ✔ Change notifications  
+    ✔ High-performance storage  
+
+    Therefore, WPF invented Dependency Properties.
+
+    ------------------------------------------------------------
+
+    2. What Is a Dependency Property?
+    A Dependency Property (DP) is:
+    ✔ Stored in WPF’s internal property store (not a field)  
+    ✔ Has metadata  
+    ✔ Supports styles  
+    ✔ Supports animations  
+    ✔ Supports templates  
+    ✔ Supports binding  
+    ✔ Supports value inheritance  
+    ✔ Supports default values  
+    ✔ Supports callbacks  
+    ✔ Supports coercion  
+    ✔ Supports change notifications  
+
+    It is a SUPER property system, 10x more powerful than regular properties.
+
+    ------------------------------------------------------------
+
+    3. The DependencyObject Class (Where DPs Live)
+    Object  
+        ↓  
+    DispatcherObject  
+        ↓  
+    DependencyObject  
+        ↓  
+    UIElement  
+        ↓  
+    FrameworkElement  
+        ↓  
+    Control  
+        ↓  
+    (Button, ListBox, TextBox, etc.)
+
+    Every WPF control inherits from DependencyObject.  
+    This class contains:
+    • the global property store  
+    • GetValue() and SetValue()  
+    • logic for metadata  
+    • value resolution  
+    • change notifications  
+    • dependency system core  
+
+    ------------------------------------------------------------
+
+    4. How a Dependency Property Is Registered  
+    Example:
+
+    public static readonly DependencyProperty AgeProperty =
+        DependencyProperty.Register(
+            "Age",
+            typeof(int),
+            typeof(PersonControl),
+            new PropertyMetadata(0));
+
+    Wrapper property:
+
+    public int Age
+    {
+        get => (int)GetValue(AgeProperty);
+        set => SetValue(AgeProperty, value);
+    }
+
+    This registers:
+    • name of the property  
+    • type  
+    • owner  
+    • default value  
+    • metadata  
+
+    ------------------------------------------------------------
+
+    5. The MOST Important Feature — Property Value Precedence
+    When WPF needs the value of a DP, it checks in this order:
+
+    1. Animation (highest priority)  
+    2. Local value (XAML or SetValue)  
+    3. TemplatedParent value  
+    4. Style triggers  
+    5. Template setters  
+    6. Style setters  
+    7. Inherited value  
+    8. Default value (metadata)  
+
+    This is why:
+    • animations override everything  
+    • setting a property in XAML overrides styles  
+    • styles override defaults  
+    • parents can pass values to children  
+
+    No other .NET UI framework has this.
+
+    ------------------------------------------------------------
+
+    6. DP Enables Binding
+    Binding requires:
+    • unified storage  
+    • metadata  
+    • change notifications  
+    • expressions  
+    • delayed evaluation  
+    • inheritance  
+
+    Normal properties cannot support this.  
+    DPs solve all this.
+
+    That is why:
+
+    &lt;TextBlock Text="{Binding Name}"/&gt;
+
+    works magically.
+
+    ------------------------------------------------------------
+
+    7. DP Enables Animation
+    Because WPF stores DP values internally, animation system can:
+    • animate per frame  
+    • override values temporarily  
+    • apply easing  
+    • revert after animation  
+
+    A normal property cannot be animated at all.
+
+    ------------------------------------------------------------
+
+    8. DP Enables Styling and Templates
+    A style sets default values:
+
+    &lt;Style TargetType="Button"&gt;
+        &lt;Setter Property="FontSize" Value="20"/&gt;
+    &lt;/Style&gt;
+
+    A template completely replaces visual appearance:
+
+    &lt;ControlTemplate TargetType="Button"&gt;
+        ...  
+    &lt;/ControlTemplate&gt;
+
+    This is possible ONLY because DP has:
+    • metadata  
+    • precedence rules  
+    • owner types  
+
+    ------------------------------------------------------------
+
+    9. Attached Properties (Very Important)
+    This XAML:
+
+    Grid.Row="2"
+    Canvas.Left="150"
+
+    These properties belong to Grid or Canvas, not the control.
+
+    Attached Property = DP that you attach to other elements.
+
+    Used for:
+    • layout  
+    • behaviors  
+    • parent-child communication  
+    • attached behaviors  
+
+    ------------------------------------------------------------
+
+    10. DP Storage Mechanism (Internal)
+    Each DependencyObject has a hidden table:
+    DependencyPropertyEntry[]
+
+    For each DP, WPF stores:
+    • effective value  
+    • base value  
+    • animated value  
+    • value source  
+    • metadata  
+    • flags  
+
+    This system is extremely optimized for UI performance.
+
+    ------------------------------------------------------------
+
+    11. DP Metadata
+    Metadata can define:
+    • default value  
+    • callbacks  
+    • change notifications  
+    • validation  
+    • AffectsRender  
+    • AffectsMeasure  
+    • AffectsArrange  
+    • Inheritance  
+
+    Example:
+
+    new FrameworkPropertyMetadata(
+        10,
+        FrameworkPropertyMetadataOptions.AffectsMeasure |
+        FrameworkPropertyMetadataOptions.AffectsArrange,
+        OnSizeChanged);
+
+    This means:
+    • if value changes → re-measure layout  
+    • call OnSizeChanged  
+
+    ------------------------------------------------------------
+
+    12. Why DP Is the Heart of WPF
+    DP powers:
+    • Binding  
+    • Animation  
+    • Styling  
+    • Templates  
+    • Resources  
+    • Inheritance  
+    • Attached properties  
+    • Layout system  
+
+    WPF literally could not exist without DPs.
+
+    ------------------------------------------------------------
+
+    Section Summary  
+    Dependency Properties provide:
+    ✔ Superior storage model  
+    ✔ Metadata-driven behavior  
+    ✔ Binding  
+    ✔ Animation  
+    ✔ Styling  
+    ✔ Inheritance  
+    ✔ Attached properties  
+    ✔ Optimized performance  
+
+    It is the ONE system that makes WPF more powerful than ANY other .NET UI framework.
+
+                    </TextBlock>
+                </ScrollViewer>
+            </Expander>
+
+
+
+            <!-- ==========================
+                 SECTION 4: Routed Events
+            =========================== -->
+            <Expander Header="4. Routed Events (Event Routing System in WPF)" IsExpanded="False" Margin="0 10 0 10">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <TextBlock TextWrapping="Wrap" FontSize="14" xml:space="preserve">
+
+    Routed Events (How Events Travel in WPF)
+    Routed Events are one of the biggest strengths of WPF.
+    They allow events to travel through the UI tree instead of staying inside one control like normal .NET events.
+
+    This makes WPF:
+    • More flexible  
+    • More powerful  
+    • Better for templating  
+    • Better for MVVM  
+    • Better for central event handling  
+
+    ------------------------------------------------------------
+
+    1. Why Normal .NET Events Are Not Enough
+    In normal .NET (WinForms style events):
+
+    button.Click += OnClick;
+
+    Problems:
+    • Event stays inside the button  
+    • Parent controls cannot react  
+    • No preview events  
+    • No way to intercept input  
+    • No routing  
+    • No unified input system  
+
+    Modern UI frameworks need:
+    ✔ parent panels to react  
+    ✔ controls to intercept global input  
+    ✔ ability to bubble/tunnel  
+    ✔ preview events  
+    ✔ template events  
+
+    So WPF introduced Routed Events.
+
+    ------------------------------------------------------------
+
+    2. What Is a Routed Event?
+    A Routed Event is an event that can travel along the UI tree.
+
+    It can travel in 3 ways:
+    1. Bubbling (Child → Parent → Window)  
+    2. Tunneling (Window → Parent → Child)  
+    3. Direct (stays on element but uses routed event system)  
+
+    This allows:
+    • parent controls to react to child events  
+    • global input handling  
+    • preview events  
+    • event interception  
+
+    ------------------------------------------------------------
+
+    3. Types of Routed Events
+
+    1) Bubbling Events (Most Common)
+    Flow:
+    Child → Parent → Window
+
+    Example: Button.Click
+    If user clicks a Button inside a Grid:
+    • Button handles it  
+    • Grid receives Click  
+    • Window receives Click  
+
+    This allows parent panels to react even if children originate event.
+
+    ------------------------------------------------------------
+
+    2) Tunneling Events (Preview Events)
+    Flow:
+    Window → Panel → Child  
+    (opposite direction)
+
+    These events have “Preview” prefix:
+    • PreviewMouseDown  
+    • PreviewTextInput  
+    • PreviewKeyDown  
+
+    Example:
+    User clicks a Button.
+
+    Order:
+    • Window.PreviewMouseDown  
+    • Grid.PreviewMouseDown  
+    • Button.PreviewMouseDown  
+    (Only after that)
+    • Button.MouseDown  
+
+    Parents can intercept input BEFORE children.
+
+    Uses:
+    ✔ Key shortcuts  
+    ✔ Blocking input  
+    ✔ Gesture interception  
+    ✔ Custom behavior  
+
+    ------------------------------------------------------------
+
+    3) Direct Events
+    These behave like normal events:
+    • MouseEnter  
+    • MouseLeave  
+    • LayoutUpdated  
+
+    They still use routed event infrastructure but do not travel.
+
+    ------------------------------------------------------------
+
+    4. Why Routed Events Exist (Design Reason)
+
+    They solve these problems:
+
+    ✔ Problem 1  
+    Parent controls need to know child activity  
+    Example: ListBox should react to clicks inside DataTemplate.
+
+    ✔ Problem 2  
+    We need PREVIEW events before child gets input  
+    For filtering keys, blocking gestures, hotkeys, etc.
+
+    ✔ Problem 3  
+    Templates expand controls  
+    A Button is not just a Button.
+    It contains Border → ContentPresenter → TextBlock.
+
+    Which element raises Click?
+    Routed events fix this.
+
+    ✔ Problem 4  
+    MVVM relies on routed commands  
+    Commands search up the tree for a handler.
+
+    ✔ Problem 5  
+    Unified input system  
+    All mouse, keyboard, touch input flows through routed events.
+
+    ------------------------------------------------------------
+
+    5. How Routed Events Work Internally
+
+    When an event is fired:
+
+    1) WPF determines the event source  
+    (e.g., inside a TextBlock inside a Button inside a Grid)
+
+    2) EventRoute is created  
+    This is a list of all elements in the route.
+
+    3) If Tunneling  
+    Route = Window → Grid → Button → actual element  
+    Raise Preview event from top to bottom.
+
+    4) Then if Bubbling  
+    Route = Child → Button → Grid → Window  
+    Raise normal event bottom to top.
+
+    5) Each element can:  
+    • handle the event  
+    • stop routing  
+    • modify event args  
+    • block propagation (Handled = true)
+
+    ------------------------------------------------------------
+
+    6. Bubbling Example
+
+    &lt;Grid MouseDown="Grid_MouseDown"&gt;
+        &lt;Button MouseDown="Button_MouseDown"&gt;Click&lt;/Button&gt;
+    &lt;/Grid&gt;
+
+    User clicks the Button.
+
+    Call order:
+    1. Button_MouseDown  
+    2. Grid_MouseDown  
+    3. Window_MouseDown  
+
+    ------------------------------------------------------------
+
+    7. Tunneling (Preview) Example
+
+    &lt;Grid PreviewMouseDown="Grid_PreviewMouseDown"&gt;
+        &lt;Button PreviewMouseDown="Button_PreviewMouseDown"&gt;Click&lt;/Button&gt;
+    &lt;/Grid&gt;
+
+    Call order:
+    1. Window PreviewMouseDown  
+    2. Grid PreviewMouseDown  
+    3. Button PreviewMouseDown  
+    4. Button MouseDown  
+    5. Grid MouseDown  
+    6. Window MouseDown  
+
+    ------------------------------------------------------------
+
+    8. Blocking an Event
+    Any handler can stop the entire chain:
+
+    e.Handled = true;
+
+    Uses:
+    • disable interaction  
+    • block mouse or keyboard  
+    • custom behavior  
+    • prevent event from reaching templates  
+
+    ------------------------------------------------------------
+
+    9. Routed Events and Commands
+    WPF commands (RoutedCommand, ICommand) rely on routed events to:
+
+    • bubble up  
+    • find a handler in parent element  
+    • check CanExecute  
+    • execute Save, Undo, Open commands  
+
+    This allows MVVM to work cleanly.
+
+    ------------------------------------------------------------
+
+    10. Routed vs Traditional Events
+
+    Traditional Events:
+    • stay inside the element  
+    • do not bubble  
+    • do not tunnel  
+    • not suitable for templated UI  
+    • no global input handling  
+
+    Routed Events:
+    • travel through UI tree  
+    • support preview (tunneling)  
+    • support bubbling  
+    • work through templates  
+    • enable centralized handling  
+    • integrate with commands  
+
+    ------------------------------------------------------------
+
+    Section Summary
+    ✔ Routed Events allow events to travel  
+    ✔ Bubbling and Tunneling allow complex UI logic  
+    ✔ Input system (mouse, keyboard, touch) uses routed events  
+    ✔ Commands depend on routed events  
+    ✔ Event routing works with templates and visual tree  
+    ✔ You can intercept or cancel input  
+
+    Routed Events are one of the strongest parts of WPF’s architecture.
+
+                    </TextBlock>
+                </ScrollViewer>
+            </Expander>
+
+
+
+            <!-- ==========================
+                 SECTION 5: SDO_GEOMETRY Notes
+            =========================== -->
+            <Expander Header="5. SDO_GEOMETRY in EF Core (Why It Fails &amp; How To Work With It)" IsExpanded="False" Margin="0 10 0 10">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <TextBlock TextWrapping="Wrap" FontSize="14" xml:space="preserve">
+
+    Why can't I use LINQ to retrieve SDO_GEOMETRY directly?
+    Because Entity Framework Core does not know how to convert SDO_GEOMETRY into a .NET type.
+
+    Reason:
+    EF Core can only map data types that the provider knows how to translate into C#.
+
+    Oracle spatial type:
+    MDSYS.SDO_GEOMETRY
+
+    is NOT simple. It contains:
+    • nested structures  
+    • arrays  
+    • optional elements  
+    • multiple geometry types  
+    • complex rules  
+
+    EF Core cannot map this to:
+    • int  
+    • string  
+    • DateTime  
+    • bool  
+
+    Therefore:
+    EF Core cannot translate SDO_GEOMETRY into a C# model.
+
+    So LINQ fails with:
+    var data = await context.Shapes.ToListAsync();
+
+    Because EF does not know how to map the Geometry column to your Shape property.
+
+    ------------------------------------------------------------
+
+    What happens behind the scenes?
+    Oracle sends SDO_GEOMETRY as multiple fields:
+    • SDO_GTYPE (NUMBER)  
+    • SDO_SRID (NUMBER)  
+    • SDO_POINT (a nested object)  
+    • SDO_ELEM_INFO (array)  
+    • SDO_ORDINATES (array)  
+
+    In C# this would require:
+    • custom C# classes  
+    • serialization code  
+    • geometry math  
+    • converters  
+    • spatial functions  
+
+    Oracle&apos;s EF provider does NOT implement any of this.
+
+    So EF cannot map it.
+
+    ------------------------------------------------------------
+
+    If LINQ doesn't work, what is the official solution?
+    Use Raw SQL + TO_WKTGEOMETRY().
+
+    Example:
+
+    var result = context.Shapes
+        .FromSqlRaw(@"
+            SELECT Id, Name,
+            SDO_UTIL.TO_WKTGEOMETRY(Shape) AS ShapeWkt
+            FROM Shapes")
+        .ToListAsync();
+
+    Oracle converts geometry → text format (WKT):
+
+    Examples:
+    POINT (10 20)
+    LINESTRING (10 10, 60 60)
+    POLYGON ((...))
+
+    WKT = Well Known Text  
+    A universal geometry format.
+
+    EF Core can map this easily because it is a string.
+
+    ------------------------------------------------------------
+
+    Alternative 1: Use NetTopologySuite (Recommended)
+    NetTopologySuite converts WKT into geometry objects.
+
+    Flow:
+    1. From Oracle → get WKT string  
+    2. Use NTS reader  
+    3. Use geometry object in C#  
+
+    Example:
+
+    var geom = new WKTReader().Read(shape.ShapeWkt);
+
+    You now have a geometry with:
+    • Area  
+    • Distance  
+    • Contains  
+    • Intersects  
+    • Buffer  
+    • Centroid  
+    • Envelope  
+
+    Everything works using NTS, free of cost.
+
+    ------------------------------------------------------------
+
+    Alternative 2: PostgreSQL + PostGIS (BEST Spatial DB)
+    If you are not forced to use Oracle, PostGIS is:
+    • fully supported  
+    • free  
+    • EF Core integrates automatically  
+    • can use LINQ  
+    • maps geometry types natively  
+    • uses NTS internally  
+
+    Example EF model:
+
+    public Point Location { get; set; }
+    public Polygon Boundary { get; set; }
+
+    EF maps these automatically.
+
+    No hacks needed.
+
+    ------------------------------------------------------------
+
+    Why Oracle doesn&apos;t support SDO_GEOMETRY in EF?
+    Because Oracle&apos;s EF Core provider:
+    • focuses on legacy enterprise DB apps  
+    • slow development  
+    • no spatial mapping  
+    • lags behind modern EF features  
+
+    Meanwhile:
+    • PostGIS provider is open source and actively maintained  
+    • SQL Server spatial works out of the box  
+
+    ------------------------------------------------------------
+
+    Feature Comparison Table
+
+    Feature             Oracle-SDO       PostGIS          SQL Server
+    LINQ support        No               Yes              Yes
+    EF native support   No               Yes              Yes
+    Raw SQL required    Yes              No               No
+    Free                Yes              Yes              Yes
+    NTS compatibility   Works via WKT    Full native      Full native
+
+    ------------------------------------------------------------
+
+    So what should YOU do?
+
+    If using Oracle:
+    ✔ Use Raw SQL + WKT + NetTopologySuite  
+
+    If learning spatial:
+    ✔ Use PostgreSQL + PostGIS (best experience)
+
+    ------------------------------------------------------------
+
+    Quick Summary
+    • EF Core cannot map SDO_GEOMETRY  
+    • LINQ fails because provider lacks spatial mapping  
+    • Raw SQL + WKT is the official workaround  
+    • NTS converts WKT to usable geometry objects  
+    • PostGIS offers full native support  
+    • Oracle&apos;s EF provider is incomplete for spatial data
+
+                    </TextBlock>
+                </ScrollViewer>
+            </Expander>
+
+
+
+            <!-- ==========================
+                 SECTION 6: Dispatcher
+            =========================== -->
+            <Expander Header="6. Dispatcher (UI Thread Manager in WPF)" IsExpanded="False" Margin="0 10 0 10">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <TextBlock TextWrapping="Wrap" FontSize="14" xml:space="preserve">
+
+    What is the Dispatcher?
+    Every WPF application has only one UI thread.
+    This UI thread is responsible for:
+    • drawing UI  
+    • updating UI  
+    • handling click events  
+    • running animations  
+    • processing window messages  
+
+    If this thread is blocked:
+    • UI freezes  
+    • window becomes unresponsive  
+    • progress bars stop  
+    • no interaction works  
+
+    So WPF introduces:
+
+    Dispatcher = The message queue manager for the UI thread.
+
+    It handles:
+    • scheduling UI updates  
+    • queuing messages  
+    • enforcing the "UI thread only" rule  
+    • allowing background threads to request UI updates  
+
+    Think of Dispatcher as:
+    A receptionist who controls who gets to talk to the UI thread.
+
+    ------------------------------------------------------------
+
+    Why do we need Dispatcher?
+
+    Because WPF enforces Thread Affinity:
+
+    "UI elements can ONLY be accessed by the thread that created them."
+
+    That thread = the UI thread.
+
+    If a background thread tries:
+    label.Content = "Hello";
+
+    WPF throws:
+    InvalidOperationException: The calling thread cannot access this object because a different thread owns it.
+
+    Why?
+    Because background threads are NOT allowed to touch UI.
+
+    So the correct way is:
+
+    Dispatcher.Invoke(() =&gt; label.Content = "Hello");
+
+    You tell the Dispatcher:
+    "Please ask the UI thread to run this code."
+
+    ------------------------------------------------------------
+
+    Internal working model of Dispatcher (simple mental model)
+    Imagine:
+    UI Thread = a worker  
+    Dispatcher = a queue  
+
+    When you call:
+    Dispatcher.BeginInvoke(() =&gt; UpdateLabel());
+
+    Steps:
+    1. The delegate is placed inside the Dispatcher queue  
+    2. UI thread finishes current work  
+    3. UI thread pulls the next item from Dispatcher  
+    4. UI thread executes the delegate  
+    5. UI gets updated safely  
+
+    This keeps the UI thread responsive and safe.
+
+    ------------------------------------------------------------
+
+    Why background threads cannot touch UI?
+
+    Because:
+    • WPF rendering engine  
+    • Dependency Property engine  
+    • MILCore  
+    • Visual Tree  
+    • DirectX compositor  
+
+    ALL depend on strict single-thread UI rules.
+
+    Allowing multiple threads to modify UI:
+    • breaks rendering  
+    • corrupts visual state  
+    • causes race conditions  
+    • creates deadlocks  
+
+    So WPF enforces one-thread UI.
+
+    ------------------------------------------------------------
+
+    When do you need the Dispatcher?
+
+    Use Dispatcher when you are:
+    ✔ on a background thread  
+    ✔ and you want to update UI  
+
+    Examples:
+    • update Label  
+    • add items to ObservableCollection incorrectly  
+    • change TextBox  
+    • modify visuals  
+    • navigate Frame  
+    • show a MessageBox  
+
+    Not needed when:
+    • you are already inside a UI event (Click, Loaded, etc.)  
+    • code is executed naturally on UI thread  
+
+    ------------------------------------------------------------
+
+    Dispatcher vs Thread vs Task vs SynchronizationContext
+
+    Thread  
+    • raw OS-level worker  
+    • heavy  
+
+    ThreadPool  
+    • pool of reusable worker threads  
+
+    Task  
+    • abstraction over ThreadPool  
+    • supports async/await  
+
+    Dispatcher  
+    • manages UI thread  
+
+    SynchronizationContext  
+    • general abstraction  
+    • WPF uses one tied to Dispatcher  
+
+    So when you write:
+    await Task.Delay(1000);
+
+    Execution automatically returns to UI thread (unless ConfigureAwait(false) is used).
+
+    ------------------------------------------------------------
+
+    Example: Long running work without freezing UI
+
+    Wrong way (block UI):
+    private void Button_Click(...)
+    {
+        Thread.Sleep(3000); // UI freeze
+    }
+
+    Correct way:
+    private async void Button_Click(...)
+    {
+        StatusLabel.Content = "Loading...";
+
+        await Task.Run(() =&gt;
+        {
+            Thread.Sleep(3000); // background
+        });
+
+        StatusLabel.Content = "Done!";
+    }
+
+    Why no Dispatcher?
+    Because async/await automatically returns control to UI thread.
+
+    ------------------------------------------------------------
+
+    Using Dispatcher explicitly
+
+    Background thread:
+    Task.Run(() =&gt;
+    {
+        var msg = "Finished";
+
+        Application.Current.Dispatcher.Invoke(() =&gt;
+        {
+            StatusLabel.Content = msg;
+        });
+    });
+
+    Without this:
+    ❌ Cross-thread access exception.
+
+    ------------------------------------------------------------
+
+    What happens if you dont use Dispatcher?
+
+    Task.Run(() =&gt; StatusLabel.Content = "Hi");
+
+    This throws exception because:
+    StatusLabel belongs to the UI thread.
+
+    ------------------------------------------------------------
+
+    Dispatcher Priorities
+    Dispatcher supports different priorities:
+    • Send (highest)  
+    • Normal  
+    • Background  
+    • ApplicationIdle  
+    • ContextIdle  
+    • SystemIdle  
+
+    Example:
+    Dispatcher.BeginInvoke(
+        DispatcherPriority.Background,
+        new Action(() =&gt; StatusText = "Updated")
+    );
+
+    ------------------------------------------------------------
+
+    DispatcherTimer
+    Used for periodic UI updates.
+
+    var timer = new DispatcherTimer();
+    timer.Interval = TimeSpan.FromSeconds(1);
+    timer.Tick += (s,e) =&gt; Clock.Text = DateTime.Now.ToString();
+    timer.Start();
+
+    Runs on UI thread automatically.
+
+    ------------------------------------------------------------
+
+    Real-world scenario where Dispatcher saves UI
+
+    You load 10,000 shapes on a map.
+    Background thread loads geometry.
+    Dispatcher adds shapes to UI safely:
+
+    Dispatcher.Invoke(() =&gt;
+    {
+        MapCanvas.Children.Add(polygon);
+    });
+
+    If you skip Dispatcher:
+    • app crashes  
+    • UI corrupts  
+    • random access violations  
+
+    ------------------------------------------------------------
+
+    When NOT to use Dispatcher
+
+    Do NOT run heavy work inside Dispatcher:
+
+    Wrong:
+    Dispatcher.Invoke(HeavyWork); // runs on UI thread, freezes UI
+
+    Correct:
+    await Task.Run(HeavyWork);
+
+    ------------------------------------------------------------
+
+    Summary:
+
+    Concept                  Meaning
+    UI Thread                The only thread allowed for UI work
+    Dispatcher               Manages UI thread job queue
+    BeginInvoke              Queue UI work (async)
+    Invoke                   Run on UI thread (sync)
+    async/await              Safe way to return to UI thread
+    Task.Run                 Move heavy work to background thread
+
+    Dispatcher is the backbone of WPF threading model.
+
+                    </TextBlock>
+                </ScrollViewer>
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
+
+</Page>

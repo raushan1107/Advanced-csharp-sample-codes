@@ -1,0 +1,225 @@
+﻿<Window x:Class="WpfApp_DataBindingLearning.BindingDemoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp_DataBindingLearning"
+        mc:Ignorable="d"
+        Title="BindingDemoWindow" Height="450" Width="800">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+        <StackPanel Margin="20">
+
+            <!-- MAIN HEADER -->
+            <TextBlock Text="WPF Binding Demonstration" 
+                       FontSize="28" 
+                       FontWeight="SemiBold" 
+                       Margin="0 0 0 20"/>
+
+
+            <!-- =======================
+                 ONE-WAY BINDING
+            ======================== -->
+            <GroupBox Header="OneWay Binding (Source → UI)">
+                <StackPanel Margin="10">
+
+                    <TextBlock Text="OneWay binding displays data from the model to the UI." 
+                               Foreground="Gray" Margin="0 0 0 5"/>
+
+                    <TextBlock Text="When to use OneWay?"
+                               FontWeight="Bold"/>
+                    <TextBlock Text="When data should update the UI, but the UI should NOT modify the data (e.g., dashboards, labels, read-only fields)."
+                               TextWrapping="Wrap" Margin="0 0 0 10"/>
+
+                    <TextBlock Text="Person's Name:" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Person.Name, Mode=OneWay}"
+                               FontSize="18" Foreground="Blue"/>
+
+                </StackPanel>
+            </GroupBox>
+
+
+            <!-- =======================
+                 TWO-WAY BINDING
+            ======================== -->
+            <GroupBox Header="TwoWay Binding (UI ↔ Source)">
+                <StackPanel Margin="10">
+
+                    <TextBlock Text="TwoWay binding keeps UI and data synchronized both ways."
+                               Foreground="Gray" Margin="0 0 0 5"/>
+
+                    <TextBlock Text="When to use TwoWay?"
+                               FontWeight="Bold"/>
+                    <TextBlock Text="When the user edits values and those changes must update the ViewModel (e.g., forms, settings pages, input fields)."
+                               TextWrapping="Wrap" Margin="0 0 0 10"/>
+
+                    <TextBlock Text="Edit Name:" FontWeight="Bold"/>
+                    <TextBox Text="{Binding Person.Name, Mode=TwoWay}" Width="200"/>
+
+                </StackPanel>
+            </GroupBox>
+
+
+            <!-- =======================
+                 ONE-TIME BINDING
+            ======================== -->
+            <GroupBox Header="OneTime Binding (Set Once)">
+                <StackPanel Margin="10">
+
+                    <TextBlock Text="OneTime binding sets the value only ONCE at load time."
+                               Foreground="Gray" Margin="0 0 0 5"/>
+
+                    <TextBlock Text="When to use OneTime?"
+                               FontWeight="Bold"/>
+                    <TextBlock Text="When data never changes OR you don't care about updates (e.g., product version, static labels, icons)."
+                               TextWrapping="Wrap" Margin="0 0 0 10"/>
+
+                    <TextBlock Text="Initial Age:" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Person.Age, Mode=OneTime}" 
+                               FontSize="18" Foreground="DarkGreen"/>
+
+                </StackPanel>
+            </GroupBox>
+
+
+            <!-- =======================
+                 ONE-WAY TO SOURCE
+            ======================== -->
+            <GroupBox Header="OneWayToSource Binding (UI → Source Only)">
+                <StackPanel Margin="10">
+
+                    <TextBlock Text="OneWayToSource pushes UI values into the ViewModel but does NOT update UI when the ViewModel changes."
+                               Foreground="Gray" Margin="0 0 0 5"/>
+
+                    <TextBlock Text="When to use OneWayToSource?"
+                               FontWeight="Bold"/>
+                    <TextBlock Text="For sensors, sliders, or special controls where UI updates data but UI should NOT react to data changes."
+                               TextWrapping="Wrap" Margin="0 0 0 10"/>
+
+                    <TextBlock Text="Type Age Below:" FontWeight="Bold"/>
+                    <TextBox Width="200">
+                        <TextBox.Text>
+                            <Binding Path="Person.Age" Mode="OneWayToSource"/>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <TextBlock Text="Model's Age (TwoWay Binding Below):" 
+                               FontWeight="Bold" Margin="0 10 0 0"/>
+                    <TextBlock Text="{Binding Person.Age}" FontSize="16"/>
+
+                </StackPanel>
+            </GroupBox>
+
+
+            <!-- =======================
+                 ELEMENT NAME BINDING
+            ======================== -->
+            <GroupBox Header="ElementName Binding (Binding Between UI Elements)">
+                <StackPanel Margin="10">
+
+                    <TextBlock Text="ElementName binding connects one UI element's property to another."
+                               Foreground="Gray" Margin="0 0 0 5"/>
+
+                    <TextBlock Text="When to use ElementName?"
+                               FontWeight="Bold"/>
+                    <TextBlock Text="Useful when UI elements depend on each other (e.g., slider controlling text size, progress bar following input)."
+                               TextWrapping="Wrap" Margin="0 0 0 10"/>
+
+                    <Slider x:Name="SlValue" Minimum="0" Maximum="100" Width="200" />
+                    <TextBlock Text="{Binding ElementName=SlValue, Path=Value}" 
+                               FontSize="18" Foreground="Purple"/>
+                </StackPanel>
+            </GroupBox>
+
+
+            <!-- =======================
+                 RELATIVE SOURCE BINDING
+            ======================== -->
+            <GroupBox Header="RelativeSource Binding (Binding to Parent / Ancestor)">
+                <StackPanel Margin="10">
+
+                    <TextBlock Text="RelativeSource binds to parent or ancestor controls."
+                               Foreground="Gray" Margin="0 0 0 5"/>
+
+                    <TextBlock Text="When to use RelativeSource?"
+                               FontWeight="Bold"/>
+                    <TextBlock Text="Essential in Control Templates, Styles, DataGrids, and when child needs a value from parent (e.g., width, theme, settings)."
+                               TextWrapping="Wrap" Margin="0 0 0 10"/>
+
+                    <Border BorderBrush="Black" BorderThickness="1" Padding="10">
+                        <TextBlock Text="{Binding 
+                                    RelativeSource={RelativeSource AncestorType=Border}, 
+                                    Path=ActualWidth}"
+                                   FontSize="16"/>
+                    </Border>
+                </StackPanel>
+            </GroupBox>
+
+        </StackPanel>
+    </ScrollViewer>
+</Window>
+
+<!--<ScrollViewer VerticalScrollBarVisibility="Auto">
+
+        <StackPanel Margin="20" >
+
+            --><!-- SECTION TITLE --><!--
+            <TextBlock Text="WPF Binding Demonstration" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Margin="0 0 0 20"/>
+
+            --><!-- ONE-WAY BINDING --><!--
+            <GroupBox Header="OneWay Binding (Source → UI)" Margin="0 10 0 10">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Person's Name:" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Person.Name, Mode=OneWay}"
+                               FontSize="16" Foreground="Blue"/>
+
+                </StackPanel>
+            </GroupBox>
+
+            --><!-- TWO-WAY BINDING --><!--
+            <GroupBox Header="TwoWay Binding (UI ↔ Source)" Margin="0 10 0 10">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Edit Name:" FontWeight="Bold"/>
+                    <TextBox Text="{Binding Person.Name, Mode=TwoWay}" Width="200"/>
+                </StackPanel>
+            </GroupBox>
+
+            --><!-- ONE-TIME BINDING --><!--
+            <GroupBox Header="OneTime Binding (Sets Once)" Margin="0 10 0 10">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Initial Age:" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Person.Age, Mode=OneTime}" 
+                               FontSize="16" Foreground="DarkGreen"/>
+                    <TextBlock Text="Changing Age will NOT update UI." 
+                               FontStyle="Italic"/>
+                </StackPanel>
+            </GroupBox>
+
+            --><!-- ONE WAY TO SOURCE --><!--
+            <GroupBox Header="OneWayToSource Binding (UI → Source Only)" Margin="0 10 0 10">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Type Age Below (Only updates Model):" FontWeight="Bold"/>
+                    <TextBox Width="200">
+                        <TextBox.Text>
+                            <Binding Path="Person.Age" Mode="OneWayToSource" />
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <TextBlock Text="Age in Model:" FontWeight="Bold" Margin="0 10 0 0"/>
+                    <TextBlock Text="{Binding Person.Age, Mode=TwoWay}" FontSize="16"/>
+                </StackPanel>
+            </GroupBox>
+
+            --><!-- ELEMENTNAME BINDING --><!--
+            <GroupBox Header="ElementName Binding" Margin="0 20 0 0">
+                <StackPanel Margin="10">
+                    <Slider x:Name="SlValue" Minimum="0" Maximum="100" Width="200"/>
+                    <TextBlock Text="{Binding ElementName=SlValue, Path=Value}" 
+                               FontSize="16" Foreground="Purple"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </ScrollViewer>-->
